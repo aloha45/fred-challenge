@@ -49,13 +49,26 @@ let records ={
 
 const filterTrueFunction = (json) => {
   let filter = json.Records.filter(record => record.messageAttributes.fooEnabled.StringValue === 'true')
-  printTimes(filter)
+  scrubTimes(filter)
 }
 
-const printTimes = (filterArr) => {
+const scrubTimes = (filterArr) => {
   let times = []
+  let parsedTimes = []
   filterArr.map(i => times.push(i.body))
-  console.log()
+  times.map(time => {
+    let scrubTime = JSON.parse(time)
+    parsedTimes.push(scrubTime.data)
+  })
+  printTimes(parsedTimes)
+}
+
+const printTimes = (scrubbedTimes) => {
+  scrubbedTimes.map(final => {
+    let epochTime = new Date(parseInt(final.split('').splice(-13).join('')))
+    let answer = (epochTime.toLocaleString())
+    console.log(answer)
+  })
 }
 
 filterTrueFunction(records)

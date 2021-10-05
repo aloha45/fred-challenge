@@ -64,11 +64,12 @@ const scrubTimes = (filterArr) => {
 }
 
 const printTimes = (scrubbedTimes) => {
+  let answerArr = []
   scrubbedTimes.map(final => {
     let epochTime = new Date(parseInt(final.split('').splice(-13).join('')))
-    let answer = (epochTime.toLocaleString())
-    console.log(answer)
+    answerArr.push(epochTime)
   })
+  console.log(answerArr)
 }
 
 filterTrueFunction(records)
